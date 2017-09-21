@@ -21,10 +21,15 @@ If you are interested in knowing if the public IP has changed, then use the foll
 ```
 Dim d as dictionary = IPify.changedIP
 ```
-The returned dictionary has two keys:
+The returned status dictionary has two keys:
 + **`IPify.kChangedIP`**. Returns `True` if the IP has changed since last check, and `False` otherwise.
 + **`IPify.kCurrentIP`**. The value referenced by this key is the current public IP.
 ## Checking periodically for the IP
 It is also possible to instruct **IPify** for Xojo to check periodically the public IP. In this case, the method to invoke expects to parameters:
 + **minutes**. The first argument is the time interval between IP checkings, indicated as minutes (defaults to 30 minutes).
-+ **notificationReceiver. This parameter expects and object that conforms to the **IPifyNotificationReceiver** Class interface, and that will receive the IPify status dictionary at the specified intervals.
++ **notificationReceiver**. This parameter expects and object that conforms to the **IPifyNotificationReceiver** Class interface, and that will receive the IPify status dictionary at the specified intervals.
+
+To stop checking periodically the IP, just call:
+`
+IPify.stopChecking
+`
