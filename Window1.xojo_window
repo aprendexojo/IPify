@@ -157,7 +157,7 @@ End
 		    
 		    Me.caption = "Enable periodic check"
 		    
-		  End If
+		  End If 
 		End Sub
 	#tag EndEvent
 #tag EndEvents
