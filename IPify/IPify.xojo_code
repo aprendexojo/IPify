@@ -140,10 +140,12 @@ Implements actionNotificationReceiver
 	#tag EndProperty
 
 
-	#tag Constant, Name = kAPINoReachable, Type = Text, Dynamic = False, Default = \"API no reachable", Scope = Private
+	#tag Constant, Name = kAPINoReachable, Type = Text, Dynamic = True, Default = \"API no reachable", Scope = Private
+		#Tag Instance, Platform = Any, Language = es, Definition  = \"API no disponible"
 	#tag EndConstant
 
-	#tag Constant, Name = kAPINoReachableMessage, Type = Text, Dynamic = False, Default = \"It is not possible to reach the remote API\x2C maybe the Internet connection is down or the remote server is offline.", Scope = Private
+	#tag Constant, Name = kAPINoReachableMessage, Type = Text, Dynamic = True, Default = \"It is not possible to reach the remote API\x2C maybe the Internet connection is down or the remote server is offline.", Scope = Private
+		#Tag Instance, Platform = Any, Language = es, Definition  = \"No est\xC3\xA1 disponible la API remota\x2C quiz\xC3\xA1 est\xC3\xA9 ca\xC3\xADda la conexi\xC3\xB3n a Internet o bien no est\xC3\xA9 disponible el servidor remoto."
 	#tag EndConstant
 
 	#tag Constant, Name = kChangedIP, Type = String, Dynamic = False, Default = \"ChangedIP", Scope = Public
