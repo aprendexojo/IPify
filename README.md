@@ -1,5 +1,5 @@
 # IPify for Xojo
-Xojo Class for using IPify service
+Xojo Class for using IPify service from Desktop apps
 
 This is a Singleton class that uses the remote IPify web service in order to get the external IP address used by the app (if any) in order to access the Internet.
 
