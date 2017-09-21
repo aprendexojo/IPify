@@ -1,6 +1,15 @@
 #tag Class
 Protected Class App
 Inherits Application
+	#tag Event
+		Function UnhandledException(error As RuntimeException) As Boolean
+		  Catch e As runtimeexception
+		    
+		    MsgBox e.Message
+		End Function
+	#tag EndEvent
+
+
 	#tag Constant, Name = kEditClear, Type = String, Dynamic = False, Default = \"&Delete", Scope = Public
 		#Tag Instance, Platform = Windows, Language = Default, Definition  = \"&Delete"
 		#Tag Instance, Platform = Linux, Language = Default, Definition  = \"&Delete"

@@ -8,8 +8,8 @@ Begin Window Window1 Implements IPifyNotificationReceiver
    Frame           =   0
    FullScreen      =   False
    FullScreenButton=   False
-   HasBackColor    =   True
-   Height          =   600
+   HasBackColor    =   False
+   Height          =   124
    ImplicitInstance=   True
    LiveResize      =   True
    MacProcID       =   0
@@ -23,15 +23,15 @@ Begin Window Window1 Implements IPifyNotificationReceiver
    MinWidth        =   64
    Placement       =   0
    Resizeable      =   True
-   Title           =   "Untitled"
+   Title           =   "IPify Test"
    Visible         =   True
-   Width           =   800
-   Begin PushButton PushButton1
+   Width           =   348
+   Begin PushButton PBPeriodicCheck
       AutoDeactivate  =   True
       Bold            =   False
       ButtonStyle     =   "0"
       Cancel          =   False
-      Caption         =   "Off"
+      Caption         =   "Enable periodic Check"
       Default         =   False
       Enabled         =   True
       Height          =   20
@@ -39,7 +39,7 @@ Begin Window Window1 Implements IPifyNotificationReceiver
       Index           =   -2147483648
       InitialParent   =   ""
       Italic          =   False
-      Left            =   601
+      Left            =   86
       LockBottom      =   False
       LockedInPosition=   False
       LockLeft        =   True
@@ -52,41 +52,77 @@ Begin Window Window1 Implements IPifyNotificationReceiver
       TextFont        =   "System"
       TextSize        =   0.0
       TextUnit        =   0
-      Top             =   80
+      Top             =   84
       Underline       =   False
       Visible         =   True
-      Width           =   80
+      Width           =   176
+   End
+   Begin PushButton PBCurrentIP
+      AutoDeactivate  =   True
+      Bold            =   False
+      ButtonStyle     =   "0"
+      Cancel          =   False
+      Caption         =   "Get current IP"
+      Default         =   False
+      Enabled         =   True
+      Height          =   20
+      HelpTag         =   ""
+      Index           =   -2147483648
+      InitialParent   =   ""
+      Italic          =   False
+      Left            =   86
+      LockBottom      =   False
+      LockedInPosition=   False
+      LockLeft        =   True
+      LockRight       =   False
+      LockTop         =   True
+      Scope           =   0
+      TabIndex        =   1
+      TabPanelIndex   =   0
+      TabStop         =   True
+      TextFont        =   "System"
+      TextSize        =   0.0
+      TextUnit        =   0
+      Top             =   20
+      Underline       =   False
+      Visible         =   True
+      Width           =   176
+   End
+   Begin PushButton PushButton3
+      AutoDeactivate  =   True
+      Bold            =   False
+      ButtonStyle     =   "0"
+      Cancel          =   False
+      Caption         =   "Check if IP has changed"
+      Default         =   False
+      Enabled         =   True
+      Height          =   20
+      HelpTag         =   ""
+      Index           =   -2147483648
+      InitialParent   =   ""
+      Italic          =   False
+      Left            =   86
+      LockBottom      =   False
+      LockedInPosition=   False
+      LockLeft        =   True
+      LockRight       =   False
+      LockTop         =   True
+      Scope           =   0
+      TabIndex        =   2
+      TabPanelIndex   =   0
+      TabStop         =   True
+      TextFont        =   "System"
+      TextSize        =   0.0
+      TextUnit        =   0
+      Top             =   52
+      Underline       =   False
+      Visible         =   True
+      Width           =   176
    End
 End
 #tag EndWindow
 
 #tag WindowCode
-	#tag Event
-		Sub Open()
-		  MsgBox "My IP Address is: " + IPify.currentIP
-		  
-		  Dim d As Dictionary = IPify.changedIP
-		  
-		  If d.value(IPify.kChangedIP) Then
-		    
-		    MsgBox "The IP Address changed to: " + d.value(IPify.currentIP)
-		    
-		  Else
-		    
-		    MsgBox "Your are using the same public IP Address: " + d.Value(IPify.kCurrentIP)
-		    
-		  End If
-		  
-		  
-		  IPify.checkForIPChangeEvery(1,me)
-		  
-		  Catch e As runtimeexception
-		    
-		    MsgBox e.Message
-		End Sub
-	#tag EndEvent
-
-
 	#tag Method, Flags = &h0
 		Sub IPChanged(IPChangeStatus as Dictionary)
 		  // Part of the IPifyNotificationReceiver interface.
@@ -106,10 +142,46 @@ End
 
 #tag EndWindowCode
 
-#tag Events PushButton1
+#tag Events PBPeriodicCheck
 	#tag Event
 		Sub Action()
-		  IPify.stopChecking
+		  If Me.caption = "Enable periodic check" then
+		    
+		    IPify.checkForIPChangeEvery(1,Self)
+		    
+		    Me.caption = "Stop periodic IP Check"
+		    
+		  Else
+		    
+		    IPify.stopChecking
+		    
+		    Me.caption = "Enable periodic check"
+		    
+		  End If
+		End Sub
+	#tag EndEvent
+#tag EndEvents
+#tag Events PBCurrentIP
+	#tag Event
+		Sub Action()
+		  MsgBox "My IP Address is: " + IPify.currentIP
+		End Sub
+	#tag EndEvent
+#tag EndEvents
+#tag Events PushButton3
+	#tag Event
+		Sub Action()
+		  Dim d As Dictionary = IPify.changedIP
+		  
+		  If d.value(IPify.kChangedIP) Then
+		    
+		    MsgBox "The IP Address changed to: " + d.value(IPify.currentIP)
+		    
+		  Else
+		    
+		    MsgBox "Your are using the same public IP Address: " + d.Value(IPify.kCurrentIP)
+		    
+		  End If
 		End Sub
 	#tag EndEvent
 #tag EndEvents
