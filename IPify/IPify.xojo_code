@@ -111,7 +111,15 @@ Implements actionNotificationReceiver
 		Private Sub PerformAction()
 		  // Part of the actionNotificationReceiver interface.
 		  
-		  ListenerToNotify.IPChanged(changedIP)
+		  If ListenerToNotify <> Nil Then
+		    
+		    ListenerToNotify.IPChanged(changedIP)
+		    
+		  Else
+		    
+		    stopChecking
+		    
+		  End If
 		End Sub
 	#tag EndMethod
 
