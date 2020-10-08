@@ -1,0 +1,14 @@
+# Xojo (formerly REALbasic and Real Studio)
+
+Builds*
+*.debug
+*.debug.app
+Debug*.exe
+Debug*/Debug*.exe
+Debug*/Debug*\ Libs
+*.rbuistate
+*.xojo_uistate
+*.obsolete
+.DS_Store
+Extras/PackExtras.app
+Distribution/ARGen.exw
