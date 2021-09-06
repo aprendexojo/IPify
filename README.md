@@ -14,12 +14,12 @@ This folder contains:
 ## Getting the current IP
 In order to know the current external (or public) IP, you only need to use this line of code:
 ```
-Dim ip as String = IPify.currentIP
+Var ip as String = IPify.currentIP
 ```
 ## Check if the IP has changed
 If you are interested in knowing if the public IP has changed, then use the following code:
 ```
-Dim d as dictionary = IPify.changedIP
+Var d as dictionary = IPify.changedIP
 ```
 The returned status dictionary has two keys:
 + **`IPify.kChangedIP`**. Returns `True` if the IP has changed since last check, and `False` otherwise.
