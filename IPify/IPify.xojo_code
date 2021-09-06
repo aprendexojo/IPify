@@ -3,16 +3,16 @@ Protected Class IPify
 Implements actionNotificationReceiver
 	#tag Method, Flags = &h0
 		Shared Function changedIP() As Dictionary
-		  Dim currentCount As Integer = getInstance.ips.Ubound
+		  Var currentCount As Integer = getInstance.ips.LastIndex
 		  
 		  Call getInstance.getIp
 		  
-		  Dim d As New Dictionary
+		  Var d As New Dictionary
 		  
-		  d.value(kChangedIP) = If(currentCount = getInstance.ips.Ubound, False, True)
-		  d.value(kCurrentIP) = getInstance.ips(getInstance.ips.Ubound)
+		  d.value(kChangedIP) = If(currentCount = getInstance.ips.LastIndex, False, True)
+		  d.value(kCurrentIP) = getInstance.ips(getInstance.ips.LastIndex)
 		  
-		  return d
+		  Return d
 		End Function
 	#tag EndMethod
 
@@ -22,11 +22,11 @@ Implements actionNotificationReceiver
 		  ListenerToNotify = Nil
 		  ListenerToNotify = notifyTo
 		  
-		  if minutes <= 0 then minutes = kDefaultMinutes
+		  If minutes <= 0 Then minutes = kDefaultMinutes
 		  
 		  If CheckerTimer <> Nil Then 
 		    
-		    CheckerTimer.Mode = timer.ModeOff
+		    CheckerTimer.RunMode = timer.RunModes.Off
 		    
 		  Else
 		    
@@ -36,7 +36,7 @@ Implements actionNotificationReceiver
 		  End If
 		  
 		  CheckerTimer.Period = minutes * 60 * 1000
-		  CheckerTimer.Mode = timer.ModeMultiple
+		  CheckerTimer.RunMode = timer.RunModes.Multiple
 		  CheckerTimer.Enabled = true
 		End Sub
 	#tag EndMethod
@@ -50,9 +50,9 @@ Implements actionNotificationReceiver
 	#tag Method, Flags = &h0
 		Shared Function currentIP() As String
 		  
-		  Dim instance As IPify = getInstance
+		  Var instance As IPify = getInstance
 		  
-		  Dim ip As String = instance.getIp
+		  Var ip As String = instance.getIp
 		  
 		  Return ip
 		  
@@ -63,7 +63,7 @@ Implements actionNotificationReceiver
 		Sub destructor()
 		  ListenerToNotify = Nil
 		  
-		  CheckerTimer.Mode = timer.ModeOff
+		  CheckerTimer.RunMode = timer.RunModes.Off
 		  CheckerTimer.Enabled = False
 		  CheckerTimer = Nil
 		  
@@ -82,28 +82,29 @@ Implements actionNotificationReceiver
 
 	#tag Method, Flags = &h21
 		Private Function getIp() As String
-		  Dim request As New HTTPSecureSocket
+		  Var request As New URLConnection
 		  
-		  Dim ip As String = request.Get(remoteAPI,10)
-		  
-		  If request.ErrorCode = -1 Then
+		  Try
+		    Var ip As String = request.SendSync("Get",remoteAPI,10)
 		    
-		    Dim err As New RuntimeException
+		    
+		    If ips.LastIndex = -1 Or ip <> ips(ips.LastIndex) Then 
+		      
+		      ips.add ip
+		      
+		    End If
+		    
+		    Return ip
+		    
+		  Catch e As RuntimeException
+		    
+		    Var err As New RuntimeException
 		    err.ErrorNumber = 100
-		    err.Reason = kAPINoReachable
 		    err.Message = kAPINoReachableMessage
 		    
 		    Raise err
 		    
-		  End If
-		  
-		  If ips.Ubound = -1 or ip <> ips(ips.Ubound) Then 
-		    
-		    ips.Append ip
-		    
-		  End If
-		  
-		  Return ip
+		  End Try
 		End Function
 	#tag EndMethod
 
@@ -125,7 +126,7 @@ Implements actionNotificationReceiver
 
 	#tag Method, Flags = &h0
 		Shared Sub stopChecking()
-		  CheckerTimer.Mode = timer.ModeOff
+		  CheckerTimer.RunMode = timer.RunModes.Off
 		  CheckerTimer.Enabled = false
 		End Sub
 	#tag EndMethod
@@ -179,6 +180,7 @@ Implements actionNotificationReceiver
 			Group="ID"
 			InitialValue="-2147483648"
 			Type="Integer"
+			EditorType=""
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="Left"
@@ -186,18 +188,23 @@ Implements actionNotificationReceiver
 			Group="Position"
 			InitialValue="0"
 			Type="Integer"
+			EditorType=""
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="Name"
 			Visible=true
 			Group="ID"
+			InitialValue=""
 			Type="String"
+			EditorType=""
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="Super"
 			Visible=true
 			Group="ID"
+			InitialValue=""
 			Type="String"
+			EditorType=""
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="Top"
@@ -205,6 +212,7 @@ Implements actionNotificationReceiver
 			Group="Position"
 			InitialValue="0"
 			Type="Integer"
+			EditorType=""
 		#tag EndViewProperty
 	#tag EndViewBehavior
 End Class

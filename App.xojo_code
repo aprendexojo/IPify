@@ -3,9 +3,10 @@ Protected Class App
 Inherits Application
 	#tag Event
 		Function UnhandledException(error As RuntimeException) As Boolean
-		  Catch e As runtimeexception
-		    
-		    MsgBox e.Message
+		  
+		  
+		  MessageBox error.Message
+		  Return true
 		End Function
 	#tag EndEvent
 
